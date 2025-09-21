@@ -14,15 +14,6 @@ import type { RouteRecordRaw } from "vue-router";
  * */
 const routes: Array<RouteRecordRaw> = [
   {
-    name: "Search",
-    path: "/search",
-    component: () => import("@/views/search/search.vue"),
-    meta: {
-      title: "找房",
-      icon: "search"
-    }
-  },
-  {
     path: "/group",
     name: "Group",
     component: () => import("@/views/group/group.vue"),
@@ -37,7 +28,7 @@ const routes: Array<RouteRecordRaw> = [
     name: "MyRoom",
     component: () => import("@/views/myRoom/myRoom.vue"),
     meta: {
-      title: "我的房间",
+      title: "接收到的报修",
       icon: "home-o"
     }
   },

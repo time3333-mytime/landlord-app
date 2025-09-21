@@ -29,7 +29,7 @@
             class="van-multi-ellipsis--l3"
             v-on-click-remove-class="['van-multi-ellipsis--l3']"
           >
-            具体帖子：{{ data.message }}
+            具体房子的id：{{ data.mid }}
           </div>
           <!--            图片-->
           <van-row>
@@ -71,7 +71,7 @@ const props = defineProps({
 });
 // 跳转到房间的详情页面
 const goMessageDetail = () => {
-  router.push({ path: "/messageDetail", query: { id: props.data.mid } });
+  router.push({ path: "/roomDetail", query: { id: props.data.mid } });
 };
 </script>
 

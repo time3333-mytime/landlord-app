@@ -16,12 +16,16 @@ import type {
   TermInfoInterface
 } from "@/api/search/types";
 import type { PageRes, ReqPage } from "@/api/types";
+import type { TalkInterface } from "@/api/message/types";
 /**
  * @description 分页查询房间列表
  * @param params
  */
 export function getRoomList(params: Partial<RoomListQueryInterface>) {
   return http.get<PageRes<RoomInterface>>(`/app/room/pageItem`, params);
+}
+export function getMyRoomList(params: Partial<RoomListQueryInterface>) {
+  return http.get<PageRes<RoomInterface>>(`/app/room/pageItem2`, params);
 }
 /**
  * @description 查询省市区列表
@@ -65,6 +69,12 @@ export function getPaymentTypeList() {
  */
 export function getRoomDetailById(id: number | string) {
   return http.get<RoomDetailInterface>(`/app/room/getDetailById?id=${id}`);
+}
+export function getIsOut(id: number | string) {
+  return http.get<Boolean>(`/app/room/isOut?id=${id}`);
+}
+export function getTalkDetailById(id: number | string) {
+  return http.get<TalkInterface[]>(`/app/room/getTalkDetailById?id=${id}`);
 }
 
 /**

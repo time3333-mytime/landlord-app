@@ -52,7 +52,7 @@
 import { onDeactivated, onMounted, onUnmounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import PullDownRefreshContainer from "@/components/PullDownRefreshContainer/PullDownRefreshContainer.vue";
-import { getMessageList, getMyFriendNumber, getMyNotReadNumber } from "@/api/message";
+import { getMessageList, getMyFriendNumber, getMyNotReadNumber, getMyNotReadNumber2 } from "@/api/message";
 import { getFriendList } from "@/api/information";
 import type { ReqPage } from "@/api/types";
 import type { ContentInterface, MessageInterface } from "@/api/message/types";
@@ -64,7 +64,7 @@ const notNumber = ref<any>();
 const FNumber = ref<any>();
 
 const notNumberHandle = async () => {
-  const { data } = await getMyNotReadNumber();
+  const { data } = await getMyNotReadNumber2();
   notNumber.value = data;
 };
 const notHandle = async () => {

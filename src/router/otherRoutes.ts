@@ -32,6 +32,15 @@ const routes: Array<RouteRecordRaw> = [
     }
   },
   {
+    name: "search",
+    path: "/searchResult",
+    component: () => import("@/views/group/searchResult.vue"),
+    meta: {
+      title: "关键词查找",
+      noCache: true
+    }
+  },
+  {
     name: "jiahaoyou",
     path: "/jiahaoyou",
     component: () => import("@/views/message/jiahaoyou.vue"),
@@ -91,6 +100,15 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("@/views/agreement/payByWechat.vue"),
     meta: {
       title: "微信支付界面",
+      noCache: true
+    }
+  },
+  {
+    name: "myOwnRoom",
+    path: "/myOwnRoom",
+    component: () => import("@/views/userCenter/myOwnRoom.vue"),
+    meta: {
+      title: "我拥有的房间",
       noCache: true
     }
   },

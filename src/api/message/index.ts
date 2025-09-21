@@ -27,17 +27,24 @@ export function getMessageListByUserId(
 export function getMessageList(params: ReqPage) {
   return http.get<PageRes<MessageInterface>>(`/app/message/pageItem`, params);
 }
+export function getWorryList(params: ReqPage) {
+  return http.get<PageRes<MessageInterface>>(`/app/message/get/worry`, params);
+}
 
 export function getNotReadList(params: ReqPage) {
   return http.get<PageRes<ContentInterface>>(`/app/message/getRead`, params);
 }
-
+export function getNotReadList2(params: ReqPage) {
+  return http.get<PageRes<ContentInterface>>(`/app/message/getRead2`, params);
+}
 export function getMessageDetailById(id: number | string) {
   return http.get<MessageDetailInterface>(
     `/app/message/getDetailById?id=${id}`
   );
 }
-
+export function getMessageList2(params: ReqPage & { keyword?: string }) {
+  return http.get<PageRes<MessageInterface>>(`/app/message/pageItem2`, params);
+}
 export function saveOrUpdatetiezi(params: Partial<MessageInterface>) {
   return http.post(`/app/message/saveOrUpdate`, params);
 }
@@ -51,7 +58,9 @@ export function saveOrUpdatepinglun(params: Partial<TalkInterface>) {
 export function getMyNotReadNumber() {
   return http.post<AppointmentItemInterface[]>(`/app/message/getNotRead`);
 }
-
+export function getMyNotReadNumber2() {
+  return http.post<AppointmentItemInterface[]>(`/app/message/getNotRead2`);
+}
 export function getMyFriendNumber() {
   return http.post<number>(`/app/information/getNotRead`);
 }

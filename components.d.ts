@@ -46,5 +46,6 @@ declare module '@vue/runtime-core' {
     VanTabbarItem: typeof import('vant/es')['TabbarItem']
     VanTag: typeof import('vant/es')['Tag']
     VanTimePicker: typeof import('vant/es')['TimePicker']
+    WorryCard: typeof import('./src/components/MessageCard/WorryCard.vue')['default']
   }
 }

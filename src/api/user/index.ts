@@ -11,7 +11,7 @@ import type {
  * @param params
  */
 export function login(params: loginQueryInterface) {
-  return http.post<string>(`/app/login`, params);
+  return http.post<string>(`/app/load/login`, params);
 }
 
 /**

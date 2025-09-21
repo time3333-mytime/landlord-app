@@ -1,4 +1,7 @@
 <template>
+  <input v-model="search" placeholder="你想搜索什么" />
+  <el-button @click="doSearch">点击搜索</el-button>
+  <hr />
   <router-view :key="$route.fullPath"></router-view>
   <div class="bg-[--color-block-background]">
     <PullDownRefreshContainer
@@ -35,12 +38,19 @@ import type { MessageInterface } from "@/api/message/types";
 import type { ReqPage } from "@/api/types";
 import { getMessageList } from "@/api/message";
 import MessageCard from "@/components/MessageCard/MessageCard.vue";
+import type { UserInfoInterface } from "@/api/user/types";
+import { changeName } from "@/api/user";
 
 const pullDownRefreshContainerRef =
   ref<InstanceType<typeof PullDownRefreshContainer>>();
 const router = useRouter();
 const MessageList = ref<MessageInterface[]>([]);
-
+let search = ref<string>("");
+const route = useRoute();
+const doSearch = () => {
+  if (!search.value.trim()) return;
+  router.push({ path: "/searchResult", query: { keyword: search.value } });
+};
 const sendtiezi = () => {
   router.push({ path: "/fatiezi" });
 };

@@ -189,31 +189,116 @@
           <ApartmentCard :data="roomDetailInfo.apartmentItemVo"></ApartmentCard>
         </div>
       </div>
+      <hr />
+      <h1>评论区由此开始</h1>
+      <div class="reply">
+        <div v-for="(talk, index) in talkList" :key="index" class="talk-item">
+          <div class="talk-author">{{ talk.userInfo?.nickname }}</div>
+          <van-image
+            round
+            width="12vw"
+            height="12vw"
+            :src="talk.userInfo?.avatarUrl || `失败`"
+          >
+            <template v-slot:error>加载失败</template>
+            <template v-slot:loading>
+              <van-loading type="spinner" size="20" />
+            </template>
+          </van-image>
+          <div class="talk-content">{{ talk.talk }}</div>
+          <van-row>
+            <van-col
+              :span="8"
+              v-for="(item, index) in talk.graphVoList"
+              :key="index"
+            >
+              <van-image width="25vw" height="25vw" :src="item.url">
+                <template v-slot:error>加载失败</template>
+                <template v-slot:loading>
+                  <van-loading type="spinner" size="20" />
+                </template>
+              </van-image>
+            </van-col>
+          </van-row>
+          <!-- 可根据需要添加时间戳等其他信息 -->
+          <div class="talk-timestamp">{{ talk.sendTime?.slice(0, 10) }}</div>
+          <el-button @click="jiahaoyou1(talk.senduserid)"
+          >点我跟他沟通</el-button
+          >
+          <div>---------------------------------------------------------</div>
+        </div>
+      </div>
+      <hr />
       <!--    预约看房-->
       <van-sticky :offset-bottom="0" position="bottom">
-        <van-button type="primary" block @click="appointmentToViewHandle"
-          >预约看房</van-button
+        <div type="primary" v-if="isOut" class="mt-[8px] font-bold text-[16px]">
+          已出租
+        </div>
+        <div
+          type="primary"
+          v-if="!isOut"
+          class="mt-[8px] font-bold text-[16px]"
+        >
+          未出租
+        </div>
+        <hr />
+        <van-button type="primary" block @click="sendpinglun2"
+          >想说两句？</van-button
         >
       </van-sticky>
     </div>
   </van-skeleton>
 </template>
 <script setup lang="ts">
-import { getRoomDetailById } from "@/api/search";
+import { getIsOut, getRoomDetailById, getTalkDetailById } from "@/api/search";
 import { onMounted, ref } from "vue";
 import type { RoomDetailInterface } from "@/api/search/types";
 import { useMap } from "@/hooks/useMap";
 import poiMarkerRed from "@/assets/poi-marker-red.png";
 import ApartmentCard from "@/components/ApartmentCard/ApartmentCard.vue";
 import { useRouter, useRoute } from "vue-router";
+import sendpinglun from "@/views/group/sendpinglun.vue";
+import type { TalkInterface } from "@/api/message/types";
+import type { InformationInterface } from "@/api/information/types";
+import { saveOrUpdate, saveOrUpdate2 } from "@/api/information";
+import { string } from "postcss-selector-parser";
 const router = useRouter();
 const route = useRoute();
 // 房间的详情信息
 const roomDetailInfo = ref<RoomDetailInterface>({} as RoomDetailInterface);
+const talkList = ref<TalkInterface[]>({} as TalkInterface[]);
+const isOut = ref<Boolean>();
 // 获取房间的详情信息
+const sendpinglun2 = () => {
+  router.push({
+    path: "/sendpinglun2",
+    query: {
+      id: route.query.id
+    }
+  });
+};
+const jiahaoyou1 = (id: number | string) => {
+  alert("已成功加好友，移步聊天界面进行沟通");
+  const form = ref<InformationInterface>({
+    id: "",
+    fromId: "",
+    toId: "",
+    text: ""
+  });
+  form.value.toId = id;
+  saveOrUpdate2(form.value);
+};
 const getRoomDetailHandle = async () => {
   const { data } = await getRoomDetailById(route.query.id as string);
   roomDetailInfo.value = data;
+};
+const getIsOut2 = async () => {
+  const { data } = await getIsOut(route.query.id as string);
+  isOut.value = data;
+};
+const getTalkDetailHandle = async () => {
+  const { data } = await getTalkDetailById(route.query.id as string);
+  talkList.value = data;
 };
 //#region <高德地图相关>
 // 地图实例
@@ -247,9 +332,12 @@ const appointmentToViewHandle = () => {
     query: { apartmentId: roomDetailInfo.value.apartmentId }
   });
 };
+
 //#endregion
 onMounted(async () => {
   await getRoomDetailHandle();
+  await getTalkDetailHandle();
+  await getIsOut2();
   console.log(roomDetailInfo.value.apartmentItemVo.longitude);
   await initMap();
   initMapPage({

@@ -65,13 +65,8 @@ const navList = ref([
   },
   {
     icon: "预约",
-    name: "我的预约",
-    path: "/myAppointment"
-  },
-  {
-    icon: "合同",
-    name: "我的租约",
-    path: "/myAgreement"
+    name: "我的房子",
+    path: "/myOwnRoom"
   }
 ]);
 const userStore = useUserStore();

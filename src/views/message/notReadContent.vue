@@ -4,7 +4,7 @@ import type { ContentInterface } from "@/api/message/types";
 import bgImgUrl from "@/assets/group_bg.png";
 import PullDownRefreshContainer from "@/components/PullDownRefreshContainer/PullDownRefreshContainer.vue";
 import type { ReqPage } from "@/api/types";
-import { getMessageList, getNotReadList } from "@/api/message";
+import { getMessageList, getNotReadList, getNotReadList2 } from "@/api/message";
 import { useRouter } from "vue-router";
 import MessageCard from "@/components/MessageCard/MessageCard.vue";
 import ContentCard from "@/views/message/ContentCard.vue";
@@ -14,7 +14,7 @@ const router = useRouter();
 const ContentList = ref<ContentInterface[]>([]);
 async function getContentListHandler(pageInfo: ReqPage) {
   // 调用接口
-  let { data } = await getNotReadList(pageInfo);
+  let { data } = await getNotReadList2(pageInfo);
   let targetRecords = data.records.map(item => {
     return {
       id: item.id,

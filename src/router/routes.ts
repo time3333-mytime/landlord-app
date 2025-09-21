@@ -10,7 +10,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/",
     name: "root",
     component: Layout,
-    redirect: "/search",
+    redirect: "/userCenter",
     children: [
       // tabBar页面
       ...tabBarRoutes,
